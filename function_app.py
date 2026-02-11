@@ -15,3 +15,5 @@ def timer_trigger(myTimer: func.TimerRequest) -> None:
     if myTimer.schedule_status:
         logging.info(f'Próxima execução: {myTimer.schedule_status.next}')
         logging.info(f'Última execução: {myTimer.schedule_status.last}')
+        print(f'Próxima execução: {myTimer.schedule_status.next}')
+        print(f'Última execução: {myTimer.schedule_status.last}')
