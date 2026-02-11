@@ -4,13 +4,14 @@ import logging
 app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
 
 
-@app.timer_trigger(schedule="0 */5 * * * *", arg_name="myTimer", run_on_startup=False,use_monitor=False) 
+@app.timer_trigger(schedule="0 */5 * * * *", arg_name="myTimer", run_on_startup=False, use_monitor=False) 
 def timer_trigger(myTimer: func.TimerRequest) -> None:
-
-    print("Timer trigger function ran at: " + str(myTimer.schedule_status.next))
+    logging.info('Python timer trigger function executed.')
     
     if myTimer.past_due:
-        print('horario: ' + str(myTimer.schedule_status.next))
-        logging.info('The timer is past due!')
-
-    logging.info('Python timer trigger function executed.')
+        logging.warning('The timer is past due!')
+    
+    # Log informações sobre o próximo agendamento
+    if myTimer.schedule_status:
+        logging.info(f'Próxima execução: {myTimer.schedule_status.next}')
+        logging.info(f'Última execução: {myTimer.schedule_status.last}')
